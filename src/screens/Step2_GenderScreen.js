@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Card, Title, IconButton } from "react-native-paper";
+import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import { Card, Title, Appbar, IconButton } from "react-native-paper";
 
 const genders = [
   { label: "Hombre", image: require("../../assets/icon.png") },
@@ -16,43 +17,56 @@ const genders = [
 
 const Step2_GenderScreen = () => {
   const [gender, setGender] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selected, setSelected] = useState(null);
   const navigation = useNavigation();
   const { edad } = useRoute().params;
 
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(false);
+      setSelected(null);
+    }, [])
+  );
+
   const handleSelect = (g) => {
-    setGender(g);
+    setSelected(g);
+    setIsLoading(true);
     setTimeout(() => {
       navigation.navigate("Step3", { edad, gender: g });
-    }, 300);
+    }, 600);
   };
 
   return (
-    <View style={styles.container}>
-      <IconButton
-        icon="arrow-left"
-        size={24}
-        onPress={() => navigation.goBack()}
-      />
-      <Title style={styles.title}>Selecciona tu género</Title>
-
-      <View style={styles.grid}>
-        {genders.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.cardContainer}
-            onPress={() => handleSelect(item.label)}
-          >
-            <Card style={styles.card}>
-              <Card.Cover source={item.image} style={styles.image} />
-              <View style={styles.footer}>
-                <Text style={styles.footerText}>{item.label}</Text>
-                <Text style={styles.arrow}>→</Text>
-              </View>
-            </Card>
-          </TouchableOpacity>
-        ))}
+    <>
+      <Appbar.Header style={{ backgroundColor: "#f9f9f9" }}>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Género" />
+      </Appbar.Header>
+      <View style={styles.container}>
+        <Title style={styles.title}>Selecciona tu género</Title>
+        <View style={styles.grid}>
+          {genders.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.cardContainer}
+              onPress={() => handleSelect(item.label)}
+            >
+              <Card style={[styles.card, selected === item.label && styles.selectedCard]}>
+                {selected === item.label && isLoading && (
+                  <ActivityIndicator style={styles.loadingIndicator} color="#00FFAA" />
+                )}
+                <Card.Cover source={item.image} style={styles.image} />
+                <View style={styles.footer}>
+                  <Text style={styles.footerText}>{item.label}</Text>
+                  <Text style={styles.arrow}>→</Text>
+                </View>
+              </Card>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -62,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f9f9f9",
     justifyContent: "center",
   },
   title: {
@@ -70,6 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
+    color: "#333",
   },
   grid: {
     flexDirection: "row",
@@ -83,13 +98,18 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
     overflow: "hidden",
+    position: "relative",
+  },
+  selectedCard: {
+    borderWidth: 2,
+    borderColor: "#1976d2",
   },
   image: {
     height: 150,
     resizeMode: "cover",
   },
   footer: {
-    backgroundColor: "#2949FF",
+    backgroundColor: "#e0e0e0",
     padding: 10,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -97,11 +117,17 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 12,
   },
   footerText: {
-    color: "white",
+    color: "#000",
     fontWeight: "bold",
   },
   arrow: {
-    color: "white",
+    color: "#000",
     fontSize: 18,
+  },
+  loadingIndicator: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    zIndex: 10,
   },
 });
