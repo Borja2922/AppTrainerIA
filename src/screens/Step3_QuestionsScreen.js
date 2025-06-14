@@ -14,7 +14,7 @@ import { preguntas } from "../utils/QuestionsGroups";
 const Step3_QuestionsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { edad, gender } = route.params;
+  const { edad, gender, peso } = route.params;
 
   const [stepIndex, setStepIndex] = useState(0);
   const [selecciones, setSelecciones] = useState({});
@@ -63,7 +63,7 @@ const Step3_QuestionsScreen = () => {
       <Text style={styles.stepIndicator}>
         Pregunta {stepIndex + 1} de {preguntas.length}
       </Text>
-      <Text style={styles.subtitle}>Edad: {edad} | Género: {gender}</Text>
+      <Text style={styles.subtitle}>Edad: {edad} | Género: {gender} | Peso: {peso}</Text>
       <Text style={styles.questionTitle}>{currentGroup.titulo}</Text>
 
       {currentGroup.opciones.map((op, i) => (

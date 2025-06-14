@@ -6,6 +6,7 @@ import Step2_GenderScreen from '../screens/Step2_GenderScreen';
 import Step3_QuestionsScreen from '../screens/Step3_QuestionsScreen';
 import Step4_ResultScreen from '../screens/Step4_ResultScreen';
 import Step5_RutinaScreen from '../screens/Step5_RutinaScreen';
+import Dashboard from '../screens/Dashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ export default function AppNavigator() {
         <Stack.Screen name="Step3" component={Step3_QuestionsScreen} />
         <Stack.Screen name="Step4" component={Step4_ResultScreen} />
         <Stack.Screen name="Step5" component={Step5_RutinaScreen} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

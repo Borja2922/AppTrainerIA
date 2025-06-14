@@ -1,3 +1,4 @@
+import { Picker } from "@react-native-picker/picker";
 import React, { useState, useCallback } from "react";
 import {
   View,
@@ -19,6 +20,7 @@ const Step2_GenderScreen = () => {
   const [gender, setGender] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [peso, setPeso] = useState(70); // Peso por defecto
   const navigation = useNavigation();
   const { edad } = useRoute().params;
 
@@ -33,7 +35,7 @@ const Step2_GenderScreen = () => {
     setSelected(g);
     setIsLoading(true);
     setTimeout(() => {
-      navigation.navigate("Step3", { edad, gender: g });
+      navigation.navigate("Step3", { edad, gender: g, peso });
     }, 600);
   };
 
@@ -64,6 +66,18 @@ const Step2_GenderScreen = () => {
               </Card>
             </TouchableOpacity>
           ))}
+        </View>
+        <View style={styles.pickerContainer}>
+          <Text style={styles.label}>Selecciona tu peso (kg):</Text>
+          <Picker
+            selectedValue={peso}
+            onValueChange={(itemValue) => setPeso(itemValue)}
+            style={styles.picker}
+          >
+            {Array.from({ length: 121 }, (_, i) => i + 30).map((value) => (
+              <Picker.Item key={value} label={`${value} kg`} value={value} />
+            ))}
+          </Picker>
         </View>
       </View>
     </>
@@ -129,5 +143,18 @@ const styles = StyleSheet.create({
     top: 8,
     right: 8,
     zIndex: 10,
+  },
+  pickerContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 8,
+  },
+  picker: {
+    width: 200,
+    height: 150,
   },
 });

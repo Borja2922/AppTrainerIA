@@ -35,8 +35,11 @@ const Step5_RutinaScreen = () => {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Step1")}>
-        <Text style={styles.buttonText}>Volver al inicio</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Dashboard", { rutinaGenerada })}
+      >
+        <Text style={styles.buttonText}>Entrenar!</Text>
       </TouchableOpacity>
     </ScrollView>
   );
