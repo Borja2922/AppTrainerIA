@@ -16,7 +16,9 @@
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "0.79.2",
-    "react-native-paper": "^5.14.3"
+    "react-native-paper": "^5.14.3",
+    "expo-auth-session": "~6.2.0",
+    "expo-apple-authentication": "~7.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
