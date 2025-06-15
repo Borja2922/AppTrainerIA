@@ -12,11 +12,11 @@ const Step5_RutinaScreen = () => {
 
   // Simulación de rutina generada
   const rutinaGenerada = [
-    "Press de banca - 4x8",
-    "Peso muerto - 4x6",
-    "Sentadilla - 4x10",
-    "Dominadas - 3x10",
-    "Curl bíceps - 3x12",
+    "Press de banca",
+    "Peso muerto",
+    "Sentadilla",
+    "Dominadas",
+    "Curl bíceps",
   ];
 
   return (
