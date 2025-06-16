@@ -14,7 +14,7 @@ export default function LoginScreen() {
 
   React.useEffect(() => {
     if (response?.type === 'success') {
-      navigation.replace('Dashboard');
+      navigation.replace('Step1');
     }
   }, [response]);
 
@@ -27,7 +27,7 @@ export default function LoginScreen() {
         ],
       });
       if (credential) {
-        navigation.replace('Dashboard');
+        navigation.replace('Step1');
       }
     } catch (e) {
       if (e.code !== 'ERR_CANCELED') console.error(e);
